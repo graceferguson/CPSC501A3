@@ -5,10 +5,17 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ObjectCreator {
-	public static void main(String args[]) {
-		Scanner intKeyboard = new Scanner(System.in);
-		Scanner stringKeyboard = new Scanner(System.in);
 
+	Scanner intKeyboard = new Scanner(System.in);
+	Scanner stringKeyboard = new Scanner(System.in);
+
+	public ObjectCreator() {
+	}
+
+	public ArrayList<Object> createObjects() {
+
+		ArrayList<Object> objList = new ArrayList<Object>();
+		
 		while (true) {
 
 			System.out.println("Select an option: ");
@@ -17,6 +24,7 @@ public class ObjectCreator {
 			System.out.println("Select 3 to create a Professor and Classes");
 			System.out.println("Select 4 to create a Department");
 			System.out.println("Select 5 to create a Faculty");
+			System.out.println("Select 6 to quit");
 
 			int entry = intKeyboard.nextInt();
 
@@ -36,6 +44,8 @@ public class ObjectCreator {
 				System.out.println("ID: " + prof.getID());
 				System.out.println("Department: " + prof.getDepartment());
 
+				objList.add(prof);
+
 			} else if (entry == 2) {
 				System.out.println("Enter a Supervisor Name:");
 				String name1 = stringKeyboard.nextLine();
@@ -53,6 +63,9 @@ public class ObjectCreator {
 				System.out.println(sup.getName() + " is supervising " + sup.getStudent());
 				System.out.println(stud.getName() + " is supervised by " + stud.getSupervisor());
 
+				objList.add(sup);
+				objList.add(stud);
+
 			} else if (entry == 3) {
 				System.out.println("Enter a Name:");
 				String name = stringKeyboard.nextLine();
@@ -64,7 +77,9 @@ public class ObjectCreator {
 				classes[1] = intKeyboard.nextInt();
 				classes[2] = intKeyboard.nextInt();
 
-				new ProfAndClasses(name, classes);
+				ProfAndClasses pAndC = new ProfAndClasses(name, classes);
+
+				objList.add(pAndC);
 
 			} else if (entry == 4) {
 
@@ -96,24 +111,25 @@ public class ObjectCreator {
 				int id3 = intKeyboard.nextInt();
 
 				Professor prof3 = new Professor(name3, id3, department);
-				
+
 				Professor[] profList = new Professor[3];
 				profList[0] = prof1;
 				profList[1] = prof2;
 				profList[2] = prof3;
-				
+
 				Department dep = new Department(department, profList);
-				
+
 				dep.printList();
-				
+
+				objList.add(dep);
 
 			} else if (entry == 5) {
-				
+
 				System.out.println("Enter a Faculty Name");
 				String faculty = stringKeyboard.nextLine();
 
 				ArrayList<Professor> profList = new ArrayList<Professor>();
-				
+
 				System.out.println("Now we will create three professors");
 
 				System.out.println("Enter a Name:");
@@ -142,12 +158,19 @@ public class ObjectCreator {
 
 				Professor prof3 = new Professor(name3, id3, faculty);
 				profList.add(prof3);
-				
+
 				Faculty facu = new Faculty(faculty, profList);
 				facu.printList();
-				
-			} else
+
+				objList.add(facu);
+
+			} else if (entry == 6) {
+				return objList;
+			}
+
+			else
 				System.out.println("invalid entry");
+
 		}
 
 	}
